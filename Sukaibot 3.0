@@ -1,0 +1,108 @@
+    /*
+    Sukaibot 3.0
+    Made by. Jisu Lee(Hongjun Na) with Visual studio
+    Copyright 2019 hongjun Na All right reserved.
+    First update - 20190516
+    Last update - 20190527
+    */
+//전역변수들
+var 인증문자 = ["실패는 성공의 어머니", "난 너를 사랑해", "세상은 너 뿐이야", "놀고 일하고 사랑하고 연대하라","넌 할 수 있어","운명에게 맡겨","죄는 미워해도 사람을 미워하지 마라","그..래..!","실패는 성공의 어머니", "난 너를 사랑해", "세상은 너 뿐이야", "놀고 일하고 사랑하고 연대하라","넌 할 수 있어","운명에게 맡겨","죄는 미워해도 사람을 미워하지 마라","그..래..!","실패는 성공의 어머니", "난 너를 사랑해", "세상은 너 뿐이야", "놀고 일하고 사랑하고 연대하라","넌 할 수 있어","운명에게 맡겨","죄는 미워해도 사람을 미워하지 마라","그..래..!"];
+var 문자;//인증문자 뽑힌거
+var 관리자 = "나홍준";//관리자 닉네임
+var words = ["신발", "붕산", "견자", "시발", "ㅅㅂ", "십알", "병신", "ㅂㅅ", "ㅄ", "개새끼", "ㄱㅅㄲ", "개색히", "개슥히", "ㄳㄲ", "븅신", "븅산", "지랄", "ㅈㄹ", "니애미", "ㄴㅇㅁ", "등신", "존나", "ㅈㄴ"];
+var jisu = ["지수좀 불러줘", "지수야", "지수!", "지수 나와","지수나와", "지수 호출", "지수호출", "지수 불러봐", "지수 불러", "지수불러", "지수형좀 불러줘", "지수형아", "지수형!", "지수형 나와","지수형나와", "지수형 호출", "지수형호출", "지수형 불러봐", "지수형 불러", "지수형불러", "지수오빠좀 불러줘", "지수오빠야", "지수오빠!", "지수오빠 나와","지수오빠나와", "지수오빠 호출", "지수오빠호출", "지수오빠 불러봐", "지수오빠 불러", "지수오빠불러","지수씨","지수님"];
+
+function response(room, msg, sender, isGroupChat, replier) {
+//admin code
+
+ if(msg=="/봇종료")
+ {
+    Api.off(sukaibot.beta);
+    replier.reply("봇이 종료되었습니다. 재실행을 원하시면 관리자에게 문의하세요.(씨익)");
+ }
+ if(msg.indexOf("/관리자 이름 변경") !==-1)
+ {
+     var split = msg.split(" ")[3];
+     관리자 = split;
+     replier.reply(split+"(으)로 변경되었습니다.");
+ }
+ if(msg=="/장비정보")
+ { 
+    replier.reply("스카이봇의 현재 장비 정보입니다.\n빌드정보 : "+Device.getBuild()+"\n안드로이드 버전 코드 : "+Device.getAndroidVersionCode()+"\n안드로이드 버전 이름 : "+Device.getAndroidVersionName()+"\n서버폰 브랜드 : "+Device.getPhoneBrand()+"\n서버폰 모델 : "+Device.getPhoneModel()+"\n충전 여부 : "+Device.isCharging()+"\n충전기 타입 : "+Device.getPlugType()+"\n배터리 잔량 : "+Device.getBatteryLevel()+"\n배터리 상태(수명) : "+Device.getBatteryHealth()+"\n배터리 온도 : "+Device.getBatteryTemperature()+"\n배터리 전압 : "+Device.getBatteryVoltage()+"\n배터리 상태 : "+Device.getBatteryStatus()+"\n기타 : "+Device.getBatteryIntent());
+ }
+ if(msg.indexOf("/원격발송") !==-1)
+ {
+   replier.reply("발송완료\n[내용]\n"+msg.split ("@") [2]);
+   replier.reply(msg.split("@") [1],"[관리자 원격 발송 메시지]\n"+msg.split ("@") [2]);
+ }
+ if(msg.indexOf("!관리자 호출") ==0)
+ {
+   replier.reply(sender+"님, 호출었습니다.\n잠시 기다리시고 연락이 없으면 재호출 해주세요:)");
+   replier.reply("나홍준","[호출]\n방제 : "+room+"\n호출자 이름 : "+sender+"\n오픈채팅여부 : "+isGroupChat);
+ }
+ if(msg.indexOf("/욕등록")!==-1){
+     var split = msg.split(" ")[1];
+     words = split;
+     replier.reply("등록되었습니다.");
+ }
+//사용금지 명렁어, 단어 사용시
+for(var n=0;n<words.length;n++){
+    if(msg.indexOf(words[n])!=-1) //욕설감지기
+    {
+        replier.reply("욕이 감지되었습니다.\n감지된 욕 : "+words[n]);
+        break
+    }
+    }
+//앱인벤터 전용
+if(msg==msg){
+    if(room == "앱인벤터(블럭코딩) 질문/정보공유"){
+        if(msg.indexOf("/도움말") ==0){
+            replier.reply(sender+"님 반갑습니다.\n원하시는 명령어를 입력 해 주세요.\n/질문방법\n/캡처방법\n!관리자 호출 - 봇 장애시에만 사용");
+        }
+        if(msg == "/캡처방법"){
+            replier.reply("아직 만드는 중");
+        }
+    }
+}
+//수다방 전용
+if(msg==msg){
+    if(room == "★친목/수다/고민상담방(여기어때)★"){
+        if(msg == "몰랑"){
+            replier.reply("몰랑 바보");
+        }
+        if(msg == "루아"){
+            replier.reply("루아 바보");
+        }
+        if(msg == "초코"){
+            replier.reply("초코 바보");
+        }
+        if(msg == "지수 바보"){
+            replier.reply("응 너도 바보");
+        }
+        if(msg == "봇 바보"){
+            replier.reply("응 너도 바보");
+        }
+        if(msg == "비서 바보"){
+            replier.reply("응 너도 바보");
+        }
+    }
+}
+//전체방 가능
+        for(var n=0;n<jisu.length;n++){
+            if(msg.indexOf(jisu[n])!=-1) //호출
+            {
+            replier.reply(sender+"님, 호출었습니다.\n잠시 기다리시고 연락이 없으면 재호출 해주세요:)");
+            replier.reply("나홍준","[호출]\n방제 : "+room+"\n호출자 이름 : "+sender+"\n오픈채팅여부 : "+isGroupChat);
+            break
+            }
+}
+//아직미완성
+/*
+if(msg == "게임목록"){
+    replier.reply("게임목록 입니다.\n/추첨뽑기\n/가위바위보")
+}
+*/
+
+
+
+}
